@@ -64,12 +64,16 @@ class RWHomeManager:NSObject,HMHomeManagerDelegate {
     @objc func reloadData() {
         rupeshAccessoryServices.removeAll()
         for aHome in homesList{
-            for accessory in aHome.accessories.filter({ $0.manufacturer == "Kilgo Devices, Inc." }) {
+            for accessory in aHome.accessories {
                 var items: [HMService] = [HMService]()
-                for service in accessory.services.filter({ $0.isUserInteractive }) {
+                for service in accessory.services.filter({ $0.serviceType != HMServiceTypeAccessoryInformation }) {
                     items.append(service)
                 }
-                rupeshAccessoryServices[aHome.name] = items
+                if rupeshAccessoryServices.count == 0{
+                    rupeshAccessoryServices[aHome.name] = items
+                }else{
+                rupeshAccessoryServices[aHome.name]?.append(contentsOf: items)
+                }
             }
         }
         NotificationCenter.default.post(name: Notification.Name.ItemEdited, object: nil)

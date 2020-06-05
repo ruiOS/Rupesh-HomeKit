@@ -13,7 +13,7 @@ extension HMService {
 
     /// The service types that Kilgo garage doors support.
     enum RHServiceType {
-        case bulb, door, unknown
+        case bulb, door, fan, unknown
     }
 
     /// The Kilgo service type for this service.
@@ -21,6 +21,7 @@ extension HMService {
         switch serviceType {
         case HMServiceTypeLightbulb: return .bulb
         case HMServiceTypeGarageDoorOpener: return .door
+        case HMServiceTypeFan: return .fan
         default: return .unknown
         }
     }
@@ -30,6 +31,7 @@ extension HMService {
         switch rhServiceType {
         case .bulb: return HMCharacteristicTypePowerState
         case .door: return HMCharacteristicTypeTargetDoorState
+        case .fan: return HMCharacteristicTypePowerState
         case .unknown: return nil
         }
     }
@@ -42,6 +44,7 @@ extension HMService {
     /// A tuple containing data of the service
     var serviceDataTuple: (String?, UIImage?,String?,String?) {
         switch rhServiceType {
+            //door setUp
         case .door:
             if let value = primaryControlCharacteristic?.value as? Int,
                 let doorState = HMCharacteristicValueDoorState(rawValue: value) {
@@ -58,6 +61,7 @@ extension HMService {
                 return ("RHKit.common.ios.service.state.unknown".localisedString, #imageLiteral(resourceName: "door-closed"),self.name,self.self.accessory?.room?.name)
             }
         case .bulb:
+            //bulb setup
             if let value = primaryControlCharacteristic?.value as? Bool {
                 if value {
                     return ("RHKit.common.ios.service.state.on".localisedString, #imageLiteral(resourceName: "bulb-on"),self.name,self.self.accessory?.room?.name)
@@ -66,6 +70,17 @@ extension HMService {
                 }
             } else {
                 return ("RHKit.common.ios.service.state.unknown".localisedString, #imageLiteral(resourceName: "bulb-off"),self.name,self.self.accessory?.room?.name)
+            }
+        case .fan:
+            //fan Setup
+            if let value = primaryControlCharacteristic?.value as? Bool {
+                if value {
+                    return ("RHKit.common.ios.service.state.on".localisedString, #imageLiteral(resourceName: "fanOff"),self.name,self.self.accessory?.room?.name)
+                } else {
+                    return ("RHKit.common.ios.service.state.off".localisedString, #imageLiteral(resourceName: "fanOn"),self.name,self.self.accessory?.room?.name)
+                }
+            } else {
+                return ("RHKit.common.ios.service.state.unknown".localisedString, #imageLiteral(resourceName: "fanOff"),self.name,self.self.accessory?.room?.name)
             }
         case .unknown:
             return ("RHKit.common.ios.service.state.unknown".localisedString, nil,self.name,self.self.accessory?.room?.name)
