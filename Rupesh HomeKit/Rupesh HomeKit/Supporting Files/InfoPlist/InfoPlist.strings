@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Rupesh HomeKit
+
+  Created by rupesh on 04/06/20.
+  Copyright © 2020 rupesh. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "Rupesh HomeKit";
+"NSHomeKitUsageDescription" = "The app uses Home Kit to configure accessories from Devices.";
