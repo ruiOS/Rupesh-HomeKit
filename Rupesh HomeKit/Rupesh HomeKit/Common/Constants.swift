@@ -10,7 +10,7 @@ import UIKit
 
 ///Stores all the constants of the app
 struct Constants {
-    ///Cell contentt view's corner radius
+    ///Cell content view's corner radius
     static let cellContentViewCornerRadius: CGFloat = 10
     ///Default accessort cell's height
     static let accessoryCellDefaultHeight: CGFloat = 120

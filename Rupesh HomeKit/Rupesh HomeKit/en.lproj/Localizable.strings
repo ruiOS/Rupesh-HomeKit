@@ -28,14 +28,20 @@
 "RHKit.common.ios.service.state.open" = "Open";
 "RHKit.common.ios.service.state.secured" = "Secured";
 "RHKit.common.ios.service.state.unsecured" = "Unsecured";
+"RHKit.common.ios.service.state.jammed" = "Jammed";
 "RHKit.common.ios.service.state.locked" = "Locked";
 "RHKit.common.ios.service.state.notLocked" = "Not Locked";
 "RHKit.common.ios.service.state.no" = "No";
+
+"RHKit.common.ios.service.state.clockwise" = "Clockwise";
+"RHKit.common.ios.service.state.counterClockWise" = "Counter-clockwise";
 
 "RHKit.common.ios.error" = "error";
 "RHKit.common.ios.error.ok" = "Ok";
 
 "RHKit.common.ios.addRoom" = "Add Room";
+"RHKit.common.ios.roomsList" = "Rooms List";
+
 "RHKit.common.ios.close" = "Close";
 
 "RHKit.common.ios.error.changeStateFailed" = "Failed to Change State";

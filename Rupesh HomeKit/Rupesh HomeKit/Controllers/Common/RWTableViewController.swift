@@ -8,13 +8,16 @@
 
 import UIKit
 
-///Default TableView Controller for the app, that consists of all the properties needed for the app
+///Default TableView Controller for the app, that consists of all the properties needed for the tableViewcontrollers of the app
 class RWTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.backgroundColor = AppColor.defaultBackGroundColor
+        //View Properties
         self.view.backgroundColor = AppColor.defaultBackGroundColor
+
+        //TableView Properties
+        self.tableView.backgroundColor = AppColor.defaultBackGroundColor
         self.tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
     }

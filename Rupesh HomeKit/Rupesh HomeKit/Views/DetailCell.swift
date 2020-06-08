@@ -8,25 +8,26 @@
 
 import UIKit
 
+///Cell used to show details of characteristics
 class DetailCell: RWHomeKitCell {
 
     //MARK:- Data
-    
-    let cellIconSize: CGFloat = 24
-
+    ///returns if cell is selectable
     var isCellSelectable: Bool = true {
         didSet{
+            //set .disclosureIndicator accessory for selectable cell
             self.accessoryType  =  isCellSelectable ? .disclosureIndicator : .none
         }
     }
 
     //MARK:- Views
 
-    private let selectedView = UIView()
-
+    ///Label that shows key of the service
     lazy var keyLabel: UILabel = self.createLabel()
+    ///Label that shows value of the service
     lazy var valueLabel: UILabel = self.createLabel()
 
+    ///method used to get a new Label
     private func createLabel()->UILabel{
         let tempLabel: UILabel = UILabel()
         tempLabel.adjustsFontSizeToFitWidth = true
@@ -35,18 +36,17 @@ class DetailCell: RWHomeKitCell {
         return tempLabel
     }
 
-
     //MARK:- Intialiser
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        //addViews
         addViews()
     }
 
-    //MARK:- cell default methods
-    
+    //MARK:- cell Methods
     override func setSelected(_ selected: Bool, animated: Bool) {
         if isCellSelectable{
             super.setSelected(selected, animated: animated)
@@ -59,14 +59,18 @@ class DetailCell: RWHomeKitCell {
     }
 
     //MARK:- Local methods
+    /// method used to add Views to cell
     private func addViews(){
+        //add keyLabel
         self.contentView.addSubview(keyLabel)
         keyLabel.leadingAnchor.constraint(equalTo: contentView.safeLeadingAnchor, constant: 20).isActive = true
         keyLabel.topAnchor.constraint(equalTo: contentView.safeTopAnchor).isActive = true
         keyLabel.bottomAnchor.constraint(equalTo: contentView.safeBottomAnchor).isActive = true
         keyLabel.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -10).isActive = true
 
+        //set valueLabel
         valueLabel.textAlignment = .right
+        //add valueLabel
         self.contentView.addSubview(valueLabel)
         valueLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         valueLabel.topAnchor.constraint(equalTo: contentView.safeTopAnchor).isActive = true
@@ -76,7 +80,13 @@ class DetailCell: RWHomeKitCell {
     }
 
     //MARK:- Internal Methods
+    /// method used to set data of cell
+    /// - Parameters:
+    ///   - key: key of the service
+    ///   - value: value of the service
+    ///   - isCellSelectable: returns if the cell is selectable
     func setCell(key:String?,value:String?,isCellSelectable:Bool = true){
+        //set cell values
         keyLabel.text = key
         valueLabel.text = value
         self.isCellSelectable = isCellSelectable

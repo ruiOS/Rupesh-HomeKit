@@ -8,12 +8,14 @@
 
 import UIKit
 
+///Cell used to display destructive Actions in cell
 class DestructiveActionCell: RWHomeKitCell {
 
     //MARK:- intialisers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        //add Destructive Label
         addDestructiveLabel()
     }
     
@@ -22,6 +24,7 @@ class DestructiveActionCell: RWHomeKitCell {
     }
     
     //MARK:- destructiveLabel
+    ///Label used to display destructive actions
     private let destructiveLabel: UILabel = {
         let tempLabel: UILabel = UILabel()
         tempLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +34,9 @@ class DestructiveActionCell: RWHomeKitCell {
         return tempLabel
     }()
 
-    func addDestructiveLabel(){
+    
+    /// method used to set destructive label constraints
+    private func addDestructiveLabel(){
         self.contentView.addSubview(destructiveLabel)
         destructiveLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         destructiveLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
@@ -40,6 +45,8 @@ class DestructiveActionCell: RWHomeKitCell {
     }
 
     //MARK:- Local Functions
+    /// method used to set details of the cell
+    /// - Parameter text: text need to be displayed in destructiveLabels
     func setCell(withText text:String?){
         destructiveLabel.text = text
     }

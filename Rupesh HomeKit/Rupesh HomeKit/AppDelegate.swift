@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        //set DarkMode for iOS13 AndAbove
+
+        //set DarkMode for devices using iOS13 And above
         if #available(iOS 13, *) {
             AppColor.setColorsForiOS13AndAbove()
         }

@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		773F894D248D177C00EA8E41 /* HMCharacteristic+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773F894C248D177B00EA8E41 /* HMCharacteristic+Extension.swift */; };
+		773F894F248E130100EA8E41 /* UISlider+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773F894E248E130100EA8E41 /* UISlider+Extensions.swift */; };
+		773F8953248E137900EA8E41 /* Float+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773F8952248E137900EA8E41 /* Float+Extensions.swift */; };
 		775420B62489154300D9CF18 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775420B52489154300D9CF18 /* Constants.swift */; };
 		77B746A82489057F0038DBF1 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B746A72489057F0038DBF1 /* AppColor.swift */; };
-		77BCE3882489666F00146767 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BCE3872489666F00146767 /* String+Extensions.swift */; };
+		77BCE3882489666F00146767 /* Strings+LocalizableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BCE3872489666F00146767 /* Strings+LocalizableExtensions.swift */; };
 		77BCE38D2489669100146767 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BCE38B2489669000146767 /* Notification+Extensions.swift */; };
 		77BCE38E2489669100146767 /* HMService+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BCE38C2489669000146767 /* HMService+Extension.swift */; };
 		77BCE392248966A400146767 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BCE390248966A400146767 /* AppFont.swift */; };
@@ -37,6 +40,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		773F894C248D177B00EA8E41 /* HMCharacteristic+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HMCharacteristic+Extension.swift"; path = "Common/HMCharacteristic+Extension.swift"; sourceTree = "<group>"; };
+		773F894E248E130100EA8E41 /* UISlider+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UISlider+Extensions.swift"; path = "Views/UISlider+Extensions.swift"; sourceTree = "<group>"; };
+		773F8952248E137900EA8E41 /* Float+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Extensions.swift"; path = "Common/Float+Extensions.swift"; sourceTree = "<group>"; };
 		775420B52489154300D9CF18 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Common/Constants.swift; sourceTree = "<group>"; };
 		775420B82489161500D9CF18 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		775420BE2489230900D9CF18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Supporting Files/Assets.xcassets"; sourceTree = "<group>"; };
@@ -44,7 +50,7 @@
 		775420C22489234B00D9CF18 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/InfoPlist/Info.plist"; sourceTree = "<group>"; };
 		775420C42489235F00D9CF18 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "Supporting Files/InfoPlist/InfoPlist.strings"; sourceTree = "<group>"; };
 		77B746A72489057F0038DBF1 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppColor.swift; path = Managers/AppColor.swift; sourceTree = "<group>"; };
-		77BCE3872489666F00146767 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Extensions.swift"; path = "Strings/String+Extensions.swift"; sourceTree = "<group>"; };
+		77BCE3872489666F00146767 /* Strings+LocalizableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Strings+LocalizableExtensions.swift"; path = "Strings/Strings+LocalizableExtensions.swift"; sourceTree = "<group>"; };
 		77BCE38B2489669000146767 /* Notification+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Notification+Extensions.swift"; path = "Common/Notification+Extensions.swift"; sourceTree = "<group>"; };
 		77BCE38C2489669000146767 /* HMService+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HMService+Extension.swift"; path = "Common/HMService+Extension.swift"; sourceTree = "<group>"; };
 		77BCE390248966A400146767 /* AppFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppFont.swift; path = Managers/AppFont.swift; sourceTree = "<group>"; };
@@ -83,8 +89,10 @@
 			isa = PBXGroup;
 			children = (
 				77BCE38C2489669000146767 /* HMService+Extension.swift */,
+				773F894C248D177B00EA8E41 /* HMCharacteristic+Extension.swift */,
 				77BCE38B2489669000146767 /* Notification+Extensions.swift */,
 				775420B52489154300D9CF18 /* Constants.swift */,
+				773F8952248E137900EA8E41 /* Float+Extensions.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -132,7 +140,7 @@
 		77B746AD248912680038DBF1 /* Strings */ = {
 			isa = PBXGroup;
 			children = (
-				77BCE3872489666F00146767 /* String+Extensions.swift */,
+				77BCE3872489666F00146767 /* Strings+LocalizableExtensions.swift */,
 				775420B92489161500D9CF18 /* Localizable.strings */,
 			);
 			name = Strings;
@@ -148,6 +156,7 @@
 				77BCE3A7248987AB00146767 /* RWTextFieldCell.swift */,
 				77BCE3A6248987AB00146767 /* RWTableHeaderFooterView.swift */,
 				77BCE3A8248987AB00146767 /* UIView+Extensions.swift */,
+				773F894E248E130100EA8E41 /* UISlider+Extensions.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -314,17 +323,20 @@
 				77BCE3B724899D9D00146767 /* EditServiceNameController.swift in Sources */,
 				77BCE3B0248987AB00146767 /* DestructiveActionCell.swift in Sources */,
 				77BCE392248966A400146767 /* AppFont.swift in Sources */,
-				77BCE3882489666F00146767 /* String+Extensions.swift in Sources */,
+				77BCE3882489666F00146767 /* Strings+LocalizableExtensions.swift in Sources */,
 				77BCE3BC24899FAD00146767 /* RWTableViewController.swift in Sources */,
 				77BCE3AE248987AB00146767 /* UIView+Extensions.swift in Sources */,
 				77BCE38E2489669100146767 /* HMService+Extension.swift in Sources */,
 				77BCE39A248968BC00146767 /* AccessoryTableViewCell.swift in Sources */,
 				77BCE38D2489669100146767 /* Notification+Extensions.swift in Sources */,
+				773F8953248E137900EA8E41 /* Float+Extensions.swift in Sources */,
 				77BCE3A52489873600146767 /* RWHomeManager.swift in Sources */,
 				77BCE3A024896BDD00146767 /* AddAccessoryController.swift in Sources */,
+				773F894F248E130100EA8E41 /* UISlider+Extensions.swift in Sources */,
 				77BCE3B424899D4F00146767 /* AccessoryDetailController.swift in Sources */,
 				77BCE3BE2489AEDE00146767 /* SettingsController.swift in Sources */,
 				77BCE3AF248987AB00146767 /* DetailCell.swift in Sources */,
+				773F894D248D177C00EA8E41 /* HMCharacteristic+Extension.swift in Sources */,
 				775420B62489154300D9CF18 /* Constants.swift in Sources */,
 				77DD96372488FE8F0094C419 /* AppDelegate.swift in Sources */,
 				77BCE3B924899DCD00146767 /* UpdateServiceRoomController.swift in Sources */,
@@ -350,6 +362,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				App_Version = 1;
+				Build_Number = 1000;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -379,6 +393,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(Build_Number)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -397,6 +412,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = "$(App_Version)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -410,6 +426,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				App_Version = 1;
+				Build_Number = 1000;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -439,6 +457,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(Build_Number)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -451,6 +470,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = "$(App_Version)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -8,13 +8,16 @@
 
 import UIKit
 
+///Cell that consists of default properties of cells in the app
 class RWHomeKitCell: UITableViewCell {
 
     //MARK:- Intialisers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        //set colors
         self.contentView.backgroundColor = .clear
         self.backgroundColor = AppColor.cellBackGroundColor
+        //add Seperator Line
         addSeparatorLine()
     }
     
@@ -23,14 +26,17 @@ class RWHomeKitCell: UITableViewCell {
     }
 
     //MARK:- SeparatorLine
-    var separatorLine: UIView = {
+    ///Separator Line for cell
+    private var separatorLine: UIView = {
         let separatorLine = UIView()
         separatorLine.translatesAutoresizingMaskIntoConstraints = false
         separatorLine.backgroundColor = AppColor.separatorColor
         return separatorLine
     }()
 
-    func addSeparatorLine(){
+    ///method used to add separator line for cell
+    private func addSeparatorLine(){
+        //add Separator Line
         self.addSubview(separatorLine)
         separatorLine.leadingAnchor.constraint(equalTo: self.safeLeadingAnchor).isActive = true
         separatorLine.trailingAnchor.constraint(equalTo: self.safeTrailingAnchor).isActive = true

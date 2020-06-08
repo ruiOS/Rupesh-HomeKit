@@ -9,24 +9,24 @@
 import UIKit
 import HomeKit
 
-///ViewController that displays accessories List
+///ViewController that displays the list of accessories
 class AccessoriesListController: UIViewController, UITableViewDataSource,UITableViewDelegate {
 
     //MARK:- Data
     ///default cellReuseIdentifier of accessoryCell
     let cellReuseIdentifier = "accessoryCell"
 
-    /// The filtered list of services that the app displays.
+    /// The filtered list of services  app displays.
     var rupeshAccessoryServices :[String: [HMService]]{
         RWHomeManager.shared.rupeshAccessoryServices
     }
 
     //MARK:- Views
+    ///tableView that displays accessories of the app
     let accessoryListTableView: UITableView = {
         let tempTableView = UITableView()
         tempTableView.backgroundColor = AppColor.defaultBackGroundColor
         let tableFooterView = UIView()
-        tableFooterView.backgroundColor = AppColor.defaultBackGroundColor
         tempTableView.tableFooterView = tableFooterView
         tempTableView.translatesAutoresizingMaskIntoConstraints = false
         return tempTableView
@@ -39,9 +39,9 @@ class AccessoriesListController: UIViewController, UITableViewDataSource,UITable
         //enable Notifications
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: Notification.Name.ItemDeleted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: Notification.Name.ItemEdited, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: Notification.Name.HomeNameEdited, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: Notification.Name.RoomNameEdited, object: nil)
 
-        //set Viewa
+        //set Views
         self.view.backgroundColor = AppColor.defaultBackGroundColor
         setTableView()
         setNavigationBar()
@@ -51,17 +51,22 @@ class AccessoriesListController: UIViewController, UITableViewDataSource,UITable
     }
 
     //MARK:- SetViews
+    //method that sets properties of navigationBar
     private func setNavigationBar(){
+        //set NavigationBar Title
+        navigationItem.title = "RHKit.common.ios.rupeshAccessories".localisedString
+
+        //set Navigationbar background colors
         self.navigationController?.navigationBar.backgroundColor = AppColor.defaultBackGroundColor
         self.navigationController?.navigationBar.isTranslucent = false
 
+        //set Navigationbar rightBarButton
         let addAccessoryButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAccessoryButtonPressed))
         addAccessoryButton.tintColor = AppColor.barButtonItemsBlueColor
         navigationItem.rightBarButtonItem  = addAccessoryButton
-
-        navigationItem.title = "RHKit.common.ios.rupeshAccessories".localisedString
     }
 
+    ///Method that sets properties of tableView
     private func setTableView(){
         accessoryListTableView.dataSource = self
         accessoryListTableView.delegate = self
@@ -76,45 +81,54 @@ class AccessoriesListController: UIViewController, UITableViewDataSource,UITable
     //MARK:- UITableView DataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //get count of accessories in a home
-        rupeshAccessoryServices[RWHomeManager.shared.homesList[section].name]?.count ?? 0
+        // return accessories in ahome
+        return rupeshAccessoryServices[RWHomeManager.shared.homesList[section].name]?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        //set Cell
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? AccessoryTableViewCell ?? AccessoryTableViewCell(style: .default, reuseIdentifier: cellReuseIdentifier)
+        ///Home of the current section
         let home = RWHomeManager.shared.homesList[indexPath.section]
+        ///accessories of the home
         let currentHomeAccessories = rupeshAccessoryServices[home.name]
+        ///current accessory the cell needs to display
         if let currentAccessory = currentHomeAccessories?[indexPath.row]{
+            //set infobutton to push to accessory details
             cell.infoButtonPressedClosure = {[weak self] in
                 self?.navigationController?.pushViewController(AccessoryDetailController(withService: currentAccessory,inHome: home), animated: true)
             }
+            //set data for the cell
             cell.setCell(service: currentAccessory)
         }
         return cell
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        //get List of Homes and set each home as a header
+        //get number of Homes
         RWHomeManager.shared.homesList.count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        //get home name of the current cell to set it as a tableView Header
         RWHomeManager.shared.homesList[section].name
     }
 
     //MARK:- UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        //set default height of cells
         return Constants.accessoryCellDefaultHeight
     }
 
     //MARK:- Local Functions
 
-    @objc func reloadTableView(){
+    ///used to reload accessoryListTableView
+    @objc private func reloadTableView(){
         self.accessoryListTableView.reloadData()
     }
 
-    @objc func addAccessoryButtonPressed(){
+    ///presents add Accessory Form
+    @objc private func addAccessoryButtonPressed(){
         let  addAccessoryController =  UINavigationController(rootViewController: AddAccessoryController())
         self.present( addAccessoryController, animated: true, completion: nil)
     }

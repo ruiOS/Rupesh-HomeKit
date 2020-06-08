@@ -12,23 +12,25 @@ import HomeKit
 ///DataModel that manages all the services accross the app
 class RWHomeManager:NSObject,HMHomeManagerDelegate {
 
-    ///A static instance of RWHomeManager
-    static let shared = RWHomeManager()
-
+    //MARK:- Data
     /// The home whose accessories the app currently displays.
     var homesList: [HMHome] = [HMHome]() {
         didSet {
             reloadData()
-            NotificationCenter.default.post(name: Notification.Name.HomeNameEdited, object: nil)
+            NotificationCenter.default.post(name: Notification.Name.RoomNameEdited, object: nil)
         }
     }
-
-    ///default HWhomeManager of the app to manage collection of homes
-    let homeManager = HMHomeManager()
 
     ///accessoryServices Stored as a dictionary.
     ///key is passed as a string which returns values as an aeeay of services
     var rupeshAccessoryServices: [String: [HMService]] = [String:[HMService]]()
+
+    ///default HWhomeManager of the app to manage collection of homes
+    let homeManager = HMHomeManager()
+
+    //MARK:- Set Singleton
+    ///A static singleton instance of RWHomeManager
+    static let shared = RWHomeManager()
 
     private override init(){
         super.init()
@@ -36,7 +38,7 @@ class RWHomeManager:NSObject,HMHomeManagerDelegate {
         homeManager.delegate = self
     }
 
-    
+    //MARK:- Internal functions
     /// Used to add home to the manager
     /// - Parameters:
     ///   - name: name of the home to be added
@@ -47,12 +49,46 @@ class RWHomeManager:NSObject,HMHomeManagerDelegate {
     
     /// Used to add accessories to the home
     /// - Parameters:
-    ///   - home: name of the accessory to be added
-    ///   - completion: Completion block that is executed after home is added
+    ///   - home: home of the accessory to be added
+    ///   - completion: Completion block that is executed after accessory is added
     func addAccessories(toHome home: HMHome,completionHandler completion:@escaping ((Error?)->Void)){
         home.addAndSetupAccessories(completionHandler: completion)
     }
+
     
+    /// method used to add accessory in the s=desired room of home
+    /// - Parameters:
+    ///   - room: room of the accessory to be added
+    ///   - home: home of the accessory to be added
+    ///   - errorBlock: error block to be executed to handle errors
+    ///   - completionHandler: Completion block that is executed after home is added
+    func addAccessory(inRoom room: HMRoom,ofHome home: HMHome, errorBlock: @escaping (((Error?)->Void)), completionHandler: @escaping (()->Void)){
+        //check old accessories
+        let oldAccessories = home.accessories
+        //add new accessory
+        self.addAccessories(toHome: home,completionHandler:{ error in
+            if let error = error, error._code != 23 {
+                errorBlock(error)
+            } else {
+                //reload data after adding accessory
+                self.reloadData()
+                //get newly of all added accessory by removing old accessory from all accessories
+                let addedAccessories = home.accessories.filter { !oldAccessories.contains($0) }
+                //get added accessories
+                for anAccessory in addedAccessories{
+                    //move added accessory to new room
+                    RWHomeManager.shared.moveAccessory(anAccessory, inHome: home, toRoom: room) { (error) in
+                        if error?._code != 23{
+                            errorBlock(error)
+                        }
+                    }
+                    //call completion block
+                    completionHandler()
+                }
+            }
+        })
+    }
+
     /// - Parameters:
     ///   - home: home to be removed
     /// - completion: Completion block that is executed after home is added
@@ -63,29 +99,37 @@ class RWHomeManager:NSObject,HMHomeManagerDelegate {
     /// Resfreshes the list to load services
     @objc func reloadData() {
         rupeshAccessoryServices.removeAll()
+        //check every home
         for aHome in homesList{
+            //check every accessory in home
             for accessory in aHome.accessories {
                 var items: [HMService] = [HMService]()
+                //check whether the service is compatiable
                 for service in accessory.services.filter({ $0.serviceType != HMServiceTypeAccessoryInformation }) {
+                    //add compatiable service to items
                     items.append(service)
                 }
-                if rupeshAccessoryServices.count == 0{
+                //add services
+                if rupeshAccessoryServices[aHome.name] == nil || rupeshAccessoryServices[aHome.name]?.count == 0{
                     rupeshAccessoryServices[aHome.name] = items
                 }else{
-                rupeshAccessoryServices[aHome.name]?.append(contentsOf: items)
+                    rupeshAccessoryServices[aHome.name]?.append(contentsOf: items)
                 }
             }
         }
+        //post notification
         NotificationCenter.default.post(name: Notification.Name.ItemEdited, object: nil)
     }
 
     //MARK:-HomeManager Delegate
     
     func homeManagerDidUpdateHomes(_ manager: HMHomeManager) {
+        //set home
         setOrAddHome(manager: manager)
     }
     
     func homeManagerDidUpdatePrimaryHome(_ manager: HMHomeManager) {
+        //set home
         setOrAddHome(manager: manager)
     }
 

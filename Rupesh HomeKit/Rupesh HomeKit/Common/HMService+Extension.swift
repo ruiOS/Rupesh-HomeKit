@@ -11,12 +11,12 @@ import HomeKit
 //Service extensions to access Data
 extension HMService {
 
-    /// The service types that Kilgo garage doors support.
+    /// The service types present Version support
     enum RHServiceType {
         case bulb, door, fan, unknown
     }
 
-    /// The Kilgo service type for this service.
+    /// Supported service type for this service.
     var rhServiceType: RHServiceType {
         switch serviceType {
         case HMServiceTypeLightbulb: return .bulb
@@ -87,25 +87,5 @@ extension HMService {
         }
     }
 
-    /// The custom displayable characteristic types specific to Kilgo devices.
-    enum KilgoCharacteristicTypes: String {
-        case fadeRate = "7E536242-341C-4862-BE90-272CE15BD633"
-    }
-
-    /// The list of characteristics to display in the UI.
-    var displayableCharacteristics: [HMCharacteristic] {
-        let characteristicTypes = [HMCharacteristicTypePowerState,
-                                   HMCharacteristicTypeBrightness,
-                                   HMCharacteristicTypeHue,
-                                   HMCharacteristicTypeSaturation,
-                                   HMCharacteristicTypeTargetDoorState,
-                                   HMCharacteristicTypeCurrentDoorState,
-                                   HMCharacteristicTypeObstructionDetected,
-                                   HMCharacteristicTypeTargetLockMechanismState,
-                                   HMCharacteristicTypeCurrentLockMechanismState,
-                                   KilgoCharacteristicTypes.fadeRate.rawValue]
-        
-        return characteristics.filter { characteristicTypes.contains($0.characteristicType) }
-    }
-
 }
+

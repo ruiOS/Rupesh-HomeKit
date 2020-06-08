@@ -12,9 +12,11 @@ class RWTableHeaderFooterView: UITableViewHeaderFooterView {
     //MARK:- Intialisers
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier:reuseIdentifier)
+        //set cell Colors
         self.backgroundColor = AppColor.defaultBackGroundColor
         self.contentView.backgroundColor = AppColor.defaultBackGroundColor
         self.backgroundView?.backgroundColor = AppColor.defaultBackGroundColor
+        //add separatorLine
         addSeparatorLine()
     }
     
@@ -23,6 +25,7 @@ class RWTableHeaderFooterView: UITableViewHeaderFooterView {
     }
 
     //MARK:- SeparatorLine
+    ///Separator Line for headerView
     var separatorLine: UIView = {
         let separatorLine = UIView()
         separatorLine.translatesAutoresizingMaskIntoConstraints = false
@@ -30,6 +33,7 @@ class RWTableHeaderFooterView: UITableViewHeaderFooterView {
         return separatorLine
     }()
 
+    ///method used to add separator line for headerView
     func addSeparatorLine(){
         self.addSubview(separatorLine)
         separatorLine.leadingAnchor.constraint(equalTo: self.safeLeadingAnchor).isActive = true

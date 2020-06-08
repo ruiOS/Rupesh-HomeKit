@@ -10,7 +10,7 @@ import UIKit
 
 ///Default App fonts are stored
 struct AppFonts {
-    
+
     ///Regular app font
     static let regularFont: UIFont = UIFont.systemFont(ofSize: 14)
     ///Bold App Font

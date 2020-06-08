@@ -12,7 +12,10 @@ import Foundation
 //MARK:- Notifictaion
 
 extension Notification.Name {
+    ///Notification to be posted when items are edited
     static let ItemEdited =   Notification.Name("itemEdited")
-    static let HomeNameEdited = Notification.Name("homeNameEdited")
+    ///Notification to be posted when room name is edited
+    static let RoomNameEdited = Notification.Name("RoomNameEdited")
+    ///Notification to be posted when an item is deleted
     static let ItemDeleted =   Notification.Name("itemDeleted")
 }

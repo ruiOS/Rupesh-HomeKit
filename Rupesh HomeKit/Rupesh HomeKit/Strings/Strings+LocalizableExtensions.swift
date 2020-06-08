@@ -1,5 +1,5 @@
 //
-//  String+Extensions.swift
+//  Strings+LocalizableExtensions.swift
 //  Rupesh HomeKit
 //
 //  Created by rupesh on 04/06/20.

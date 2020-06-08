@@ -11,6 +11,7 @@ import UIKit
 extension UIView{
 
     //set safelayout anchors to use across the app
+    /// TopAnchor embedded in safeArea of the View
     var safeTopAnchor: NSLayoutYAxisAnchor{
         get{
             if #available(iOS 11.0, *){
@@ -20,6 +21,7 @@ extension UIView{
         }
     }
 
+    /// BottomAnchor embedded in safeArea of the View
     var safeBottomAnchor: NSLayoutYAxisAnchor{
         get{
             if #available(iOS 11.0, *){
@@ -29,6 +31,7 @@ extension UIView{
         }
     }
 
+    /// Leading Anchor embedded in safeArea of the View\
     var safeLeadingAnchor: NSLayoutXAxisAnchor{
         get{
             if #available(iOS 11.0, *){
@@ -38,6 +41,7 @@ extension UIView{
         }
     }
 
+    /// TrailingAnchor embedded in safeArea of the View
     var safeTrailingAnchor: NSLayoutXAxisAnchor{
         get{
             if #available(iOS 11.0, *){
