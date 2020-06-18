@@ -2,7 +2,7 @@
 //  UISlider+Extensions.swift
 //  Rupesh HomeKit
 //
-//  Created by rupesh-6878 on 08/06/20.
+//  Created by rupesh on 08/06/20.
 //  Copyright © 2020 rupesh. All rights reserved.
 //
 

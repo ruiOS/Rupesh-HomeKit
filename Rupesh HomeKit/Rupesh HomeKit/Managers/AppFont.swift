@@ -8,7 +8,7 @@
 
 import UIKit
 
-///Default App fonts are stored
+///Contains fonts used in app
 struct AppFonts {
 
     ///Regular app font

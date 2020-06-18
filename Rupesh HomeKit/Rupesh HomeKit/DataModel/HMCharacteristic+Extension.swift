@@ -12,31 +12,30 @@ extension HMCharacteristic {
 
     ///returns state names the object supports
     var stateNames: [String] {
-        var characteristicStrings: [String] = [String]()
         switch characteristicType {
         case HMCharacteristicTypeCurrentLockMechanismState:
-            characteristicStrings = ["RHKit.common.ios.service.state.unsecured",
-                    "RHKit.common.ios.service.state.secured",
-                    "RHKit.common.ios.service.state.jammed",
-                    "RHKit.common.ios.service.state.unknown"]
+            return [LocalisedStrings.state_unsecured,
+                    LocalisedStrings.state_secured,
+                    LocalisedStrings.state_jammed,
+                    LocalisedStrings.state_unknown]
         case HMCharacteristicTypeTargetLockMechanismState:
-            characteristicStrings = ["RHKit.common.ios.service.state.notLocked",
-            "RHKit.common.ios.service.state.locked"]
+            return [LocalisedStrings.state_notLocked,
+                    LocalisedStrings.state_locked]
         case HMCharacteristicTypeCurrentDoorState:
-            characteristicStrings = ["RHKit.common.ios.service.state.open",
-                    "RHKit.common.ios.service.state.closed",
-                    "RHKit.common.ios.service.state.opening",
-                    "RHKit.common.ios.service.state.closing",
-                    "RHKit.common.ios.service.state.stopped"]
+            return [LocalisedStrings.state_open,
+                    LocalisedStrings.state_closed,
+                    LocalisedStrings.state_opening,
+                    LocalisedStrings.state_closing,
+                    LocalisedStrings.state_stopped]
         case HMCharacteristicTypeTargetDoorState:
-            characteristicStrings = ["RHKit.common.ios.service.state.open",
-            "RHKit.common.ios.service.state.closed"]
+            return [LocalisedStrings.state_open,
+                    LocalisedStrings.state_closed]
         case HMCharacteristicTypeRotationDirection:
-            characteristicStrings = ["RHKit.common.ios.service.state.clockwise",
-                "RHKit.common.ios.service.state.counterClockWise"]
-        default: break
+            return [LocalisedStrings.state_clockwise,
+                    LocalisedStrings.state_counterClockwise]
+        default:
+            return []
         }
-        return characteristicStrings.map{$0.localisedString}
     }
 
     /// Indicates if you can write to the characteristic.

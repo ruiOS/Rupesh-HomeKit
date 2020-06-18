@@ -28,7 +28,7 @@ class AddAccessoryController: RWTableViewController {
         //add navigation bar items
 
         //set navigation bar title
-        self.title = "RHKit.common.ios.homesList".localisedString
+        self.title = LocalisedStrings.title_homesList
 
         //add navigation bar buttons
         ///button to add homes
@@ -50,8 +50,8 @@ class AddAccessoryController: RWTableViewController {
     /// Method used to display error
     /// - Parameter error: error to be displayed
     private func displayError(error: Error?){
-        let alert = UIAlertController(title: "RHKit.common.ios.error".localisedString, message: error?.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.error.ok".localisedString, style: .default, handler: nil))
+        let alert = UIAlertController(title: LocalisedStrings.alert_error, message: error?.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_ok, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 
@@ -60,14 +60,14 @@ class AddAccessoryController: RWTableViewController {
     @objc func addButtonPressed(){
         //show alert to add home
         ///alert used to add ahome
-        let alert = UIAlertController(title: "RHKit.common.ios.addAHome".localisedString,
+        let alert = UIAlertController(title: LocalisedStrings.alert_addHome,
                                       message: nil,
                                       preferredStyle: .alert)
         //add textField to alert
-        alert.addTextField { $0.placeholder = "RHKit.common.ios.name".localisedString }
+        alert.addTextField { $0.placeholder = LocalisedStrings.common_name }
         //set alert actions
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.close".localisedString, style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.create".localisedString, style: .default) { [unowned self]_ in
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_close, style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_create, style: .default) { [unowned self]_ in
             // check if name exists for the home
             if let name = alert.textFields?[0].text {
                 //add home
@@ -142,7 +142,16 @@ class AddAccessoryController: RWTableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //push to set room for the accessories
-        let updateServiceRoom = UpdateRoomController(inHome: self.homesList[indexPath.row])
-        self.navigationController?.pushViewController(updateServiceRoom, animated: true)
+        RWHomeManager.shared.addAccessories(toHome: self.homesList[indexPath.row]) { [weak self](error) in
+            if let error = error{
+                self?.displayError(error: error)
+            }else{
+                self?.navigationController?.dismiss(animated: true, completion: {
+                    //post notification after adding service
+                    RWHomeManager.shared.reloadData()
+                    NotificationCenter.default.post(name: Notification.Name.ItemEdited, object: nil)
+                })
+            }
+        }
     }
 }

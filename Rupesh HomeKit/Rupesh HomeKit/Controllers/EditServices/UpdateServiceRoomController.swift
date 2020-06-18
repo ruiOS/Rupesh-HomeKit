@@ -24,9 +24,6 @@ class UpdateRoomController: RWTableViewController {
     ///home for ehich the rooms are edited
     var home: HMHome!
 
-    ///gives whether service need to be added
-    var isAddService: Bool = false
-
     ///provides of rooms in home
     var roomsList: [HMRoom]{
         //get room of entire home
@@ -51,26 +48,13 @@ class UpdateRoomController: RWTableViewController {
         self.key = key
         self.home = home
     }
-    
-    /// returns an object of UpdateRoomController
-    /// used to select room to add new service
-    /// - Parameter home: home for which the services are to be added
-    convenience init(inHome home: HMHome){
-        self.init()
-        self.isAddService = true
-        self.home = home
-    }
 
     //MARK:- ViewLifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         //set title
-        if isAddService{
-            self.title = home.name.localisedString
-        }else{
-            self.title = key
-        }
+        self.title = key
         //set navigation bar buttons
         ///button used to add new rooms
         let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonItemPressed))
@@ -87,8 +71,8 @@ class UpdateRoomController: RWTableViewController {
     private func displayError(error: Error?,withStringMessage message: String? = nil){
         //set message for error
         let errorMessage = error != nil ? error?.localizedDescription : message
-        let alert = UIAlertController(title: "RHKit.common.ios.error".localisedString, message: errorMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.error.ok".localisedString, style: .default, handler: nil))
+        let alert = UIAlertController(title: LocalisedStrings.alert_error, message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_ok, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -96,12 +80,12 @@ class UpdateRoomController: RWTableViewController {
     ///called when addButton is pressed
     @objc func addBarButtonItemPressed(){
         ///alert that shows textField to set a room name
-        let alert = UIAlertController(title: "RHKit.common.ios.addRoom".localisedString,
+        let alert = UIAlertController(title: LocalisedStrings.alert_addRoom,
                                       message: nil,
                                       preferredStyle: .alert)
-        alert.addTextField { $0.placeholder = "RHKit.common.ios.name".localisedString }
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.close".localisedString, style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.create".localisedString, style: .default) { [unowned self]_ in
+        alert.addTextField { $0.placeholder = LocalisedStrings.common_name }
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_close, style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_create, style: .default) { [unowned self]_ in
             // check if name exists for the home
             if let name = alert.textFields?[0].text {
                 //add room
@@ -135,9 +119,7 @@ class UpdateRoomController: RWTableViewController {
         let currentRoom = roomsList[indexPath.row]
         cell.textLabel?.text = currentRoom.name
         //set accessory type for edit service rooms
-        if !isAddService{
-            cell.accessoryType = currentRoom.uniqueIdentifier == service.accessory?.room?.uniqueIdentifier ? .checkmark : .none
-        }
+        cell.accessoryType = currentRoom.uniqueIdentifier == service.accessory?.room?.uniqueIdentifier ? .checkmark : .none
         return cell
     }
 
@@ -152,33 +134,18 @@ class UpdateRoomController: RWTableViewController {
         //get cell
         let cell = tableView.cellForRow(at: indexPath)
         //check if adding service
-        if isAddService{
-            //add accessory to the selected room
-            RWHomeManager.shared.addAccessory(inRoom: currentRoom,ofHome: self.home ,errorBlock: { [weak self] error in
-                if let error = error{
-                    self?.displayError(error: error)
+        if let accessory = service.accessory{
+            //move accessory to the selected service
+            RWHomeManager.shared.moveAccessory(accessory, inHome: home, toRoom: currentRoom) { [unowned self](error) in
+                if let _ = error{
+                    self.displayError(error: error)
                 }
-                }, completionHandler: {[weak self] in
-                    //pop navigation controller after adding service to room
-                    self?.navigationController?.dismiss(animated: true, completion: {
-                        //post notification after adding service
-                        NotificationCenter.default.post(name: Notification.Name.ItemEdited, object: nil)
-                    })
-            })
-        }else{
-            if let accessory = service.accessory{
-                //move accessory to the selected service
-                RWHomeManager.shared.moveAccessory(accessory, inHome: home, toRoom: currentRoom) { [unowned self](error) in
-                    if let _ = error{
-                        self.displayError(error: error)
-                    }
-                    //post notification after updating room
-                    NotificationCenter.default.post(name: Notification.Name.ItemEdited, object: nil)
-                }
+                //post notification after updating room
+                NotificationCenter.default.post(name: Notification.Name.ItemEdited, object: nil)
             }
-            //set checkmark to the selectd room
-            cell?.accessoryType = .checkmark
         }
+        //set checkmark to the selectd room
+        cell?.accessoryType = .checkmark
     }
 
     //MARK:- UITableViewDataSource
@@ -193,28 +160,26 @@ class UpdateRoomController: RWTableViewController {
         let room = roomsList[indexPath.row]
         if (editingStyle == .delete){
             //check whether is add service or the room identifier is not the room of selected cell
-            if isAddService || room.uniqueIdentifier != service.accessory?.room?.uniqueIdentifier{
+            if room.uniqueIdentifier != service.accessory?.room?.uniqueIdentifier{
                 ///index of the room to be deleted
                 if let firstIndex = self.roomsList.firstIndex(of: room){
                     //remove room
                     RWHomeManager.shared.removeRoom(room, inHome: self.home) { (error) in
                         if let _ = error {
                             self.displayError(error: error)
-                        }
-                        else{
+                        }else{
                             tableView.beginUpdates()
                             let cellIndexPath = IndexPath(row: firstIndex, section: 0)
                             tableView.deleteRows(at: [cellIndexPath], with: .automatic)
                             tableView.endUpdates()
-                                //post notification after deleting room
-                            NotificationCenter.default.post(name: Notification.Name.ItemEdited, object: nil)
+                            //reload RWHomeManager Data after removing rooms
+                            RWHomeManager.shared.reloadData()
                         }
                     }
-                    
                 }
             }else{
                 //display error that current toom can't be deleted
-                self.displayError(error: nil, withStringMessage: "RHKit.common.ios.error.defaultRoomError".localisedString)
+                self.displayError(error: nil, withStringMessage: LocalisedStrings.alert_defaultRoomError)
             }
         }
     }

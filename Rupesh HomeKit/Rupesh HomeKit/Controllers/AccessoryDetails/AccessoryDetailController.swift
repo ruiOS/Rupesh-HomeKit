@@ -86,25 +86,25 @@ class AccessoryDetailController: RWTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: section1CellIdentifier) as? DetailCell ?? DetailCell(style: .value1, reuseIdentifier: section1CellIdentifier)
             switch indexPath.row {
             case 0:
-                cell.setCell(key:"RHKit.common.ios.name".localisedString,value:service?.name)
+                cell.setCell(key:LocalisedStrings.common_name,value:service?.name)
             case 1:
-                cell.setCell(key:"RHKit.common.ios.room".localisedString,value:service?.accessory?.room?.name)
+                cell.setCell(key:LocalisedStrings.detail_room,value:service?.accessory?.room?.name)
             default:
-                cell.setCell(key:"RHKit.common.ios.settings".localisedString,value:"")
+                cell.setCell(key:LocalisedStrings.detail_settings,value:"")
             }
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: section1CellIdentifier) as? DetailCell ?? DetailCell(style: .default, reuseIdentifier: section1CellIdentifier)
             switch indexPath.row {
             case 0:
-                cell.setCell(key:"RHKit.common.ios.model".localisedString,value:service?.accessory?.model,isCellSelectable:false)
+                cell.setCell(key:LocalisedStrings.detail_model,value:service?.accessory?.model,isCellSelectable:false)
             default:
-                cell.setCell(key:"RHKit.common.ios.firmWareVersion".localisedString,value:service?.accessory?.firmwareVersion,isCellSelectable:false)
+                cell.setCell(key:LocalisedStrings.detail_firmwareVersion,value:service?.accessory?.firmwareVersion,isCellSelectable:false)
             }
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: section3CellIdentifier) as? DestructiveActionCell ?? DestructiveActionCell(style: .default, reuseIdentifier: section3CellIdentifier)
-            cell.setCell(withText: "RHKit.common.ios.removeAccessory".localisedString)
+            cell.setCell(withText: LocalisedStrings.common_removeAccessory)
             return cell
         }
     }
@@ -120,10 +120,10 @@ class AccessoryDetailController: RWTableViewController {
         case 0:
             switch indexPath.row {
             case 0:
-                let editDetailVC = EditServiceNameController(key: "RHKit.common.ios.name".localisedString, forService: service!)
+                let editDetailVC = EditServiceNameController(key: LocalisedStrings.common_name, forService: service!)
                 navigationController?.pushViewController(editDetailVC, animated: true)
             case 1:
-                let updateRoomVC = UpdateRoomController(withKey: "RHKit.common.ios.room".localisedString, forService: service!, inHome: home)
+                let updateRoomVC = UpdateRoomController(withKey: LocalisedStrings.detail_room, forService: service!, inHome: home)
                 navigationController?.pushViewController(updateRoomVC, animated: true)
             default:
                 if let tempService = service{
@@ -151,11 +151,11 @@ class AccessoryDetailController: RWTableViewController {
     ///method used to remove accessory
     private func removeAccessory(){
         //show alert to confirm removing accessory
-        let alert = UIAlertController(title: "RHKit.common.ios.removeAccessory".localisedString,
-                                      message: "RHKit.common.ios.alert.areYoureToRemoveAccessory".localisedString,
+        let alert = UIAlertController(title: LocalisedStrings.common_removeAccessory,
+                                      message: LocalisedStrings.alert_areYouSureToRemoveAccessory,
                                       preferredStyle: .alert)
         //add action to remove accessory
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.alert.remove".localisedString, style: .destructive) { [unowned self]_ in
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_remove, style: .destructive) { [unowned self]_ in
             ///current accessory
             if let accessory = self.service?.accessory{
                 //accessory removal
@@ -172,8 +172,7 @@ class AccessoryDetailController: RWTableViewController {
                 }
             }
         })
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.alert.cancel".localisedString, style: .cancel) { _ in
-        })
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_cancel, style: .cancel))
         //present alert
         present(alert, animated: true)
     }
@@ -181,8 +180,8 @@ class AccessoryDetailController: RWTableViewController {
     /// Method used to display errors
     /// - Parameter error: error to be displayed
     private func displayError(error: Error){
-        let alert = UIAlertController(title: "RHKit.common.ios.error".localisedString, message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "RHKit.common.ios.error.ok".localisedString, style: .default, handler: nil))
+        let alert = UIAlertController(title: LocalisedStrings.alert_error, message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: LocalisedStrings.alert_ok, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }

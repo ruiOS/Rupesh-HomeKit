@@ -8,9 +8,6 @@
 
 import Foundation
 
-
-//MARK:- Notifictaion
-
 extension Notification.Name {
     ///Notification to be posted when items are edited
     static let ItemEdited =   Notification.Name("itemEdited")

@@ -54,8 +54,8 @@ class SettingsController: RWTableViewController,HMAccessoryDelegate {
         let currentCharacteristic = service.characteristics[indexPath.row]
         cell.setCell(characteristic: currentCharacteristic,isPrimaryControlCharacteristic: service.primaryControlCharacteristic == currentCharacteristic)
         cell.errorHandler = { [unowned self]error in
-            let alert = UIAlertController(title: "RHKit.common.ios.error".localisedString, message: error?.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "RHKit.common.ios.error.ok".localisedString, style: .default, handler: nil))
+            let alert = UIAlertController(title: LocalisedStrings.alert_error, message: error?.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: LocalisedStrings.alert_ok, style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         return cell

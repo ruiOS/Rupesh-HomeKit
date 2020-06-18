@@ -8,7 +8,7 @@
 
 import UIKit
 
-///Object that manages colors in the app
+///Class that manages colors in the app
 class AppColor {
     
     ///default backGroundColor of the app

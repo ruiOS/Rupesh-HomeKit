@@ -180,7 +180,7 @@ class AccessoryTableViewCell: UITableViewCell {
                 self.setCell(service: self.service)
                 if let _ = error{
                     //set error to sccessory state
-                    self.accessoryStateLabel.text = "RHKit.common.ios.error.changeStateFailed".localisedString
+                    self.accessoryStateLabel.text = LocalisedStrings.error_changeStateFailed
                 }
             }
         }

@@ -20,5 +20,4 @@ struct Constants {
     static let defaultCellHeight: CGFloat = 40
     ///default Headerview Height
     static let defaultSectionHeaderView: CGFloat = 40
-
 }

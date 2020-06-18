@@ -54,7 +54,7 @@ class AccessoriesListController: UIViewController, UITableViewDataSource,UITable
     //method that sets properties of navigationBar
     private func setNavigationBar(){
         //set NavigationBar Title
-        navigationItem.title = "RHKit.common.ios.rupeshAccessories".localisedString
+        navigationItem.title = LocalisedStrings.title_RupeshAccessories
 
         //set Navigationbar background colors
         self.navigationController?.navigationBar.backgroundColor = AppColor.defaultBackGroundColor
